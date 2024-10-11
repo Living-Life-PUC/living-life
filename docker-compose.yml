@@ -17,11 +17,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/living-life
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/living-life
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
     depends_on:
-      - postgres  # Ensure PostgreSQL starts before the Spring app
+      - postgres
 
 volumes:
   postgres_data:
