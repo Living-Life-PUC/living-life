@@ -10,6 +10,6 @@ import com.livinglive.llft.entities.Tweet;
 import com.livinglive.llft.entities.User;
 
 @Repository
-public interface TwwetRepository extends JpaRepository<Tweet, Long>{
+public interface TweetRepository extends JpaRepository<Tweet, Long>{
     
 }
