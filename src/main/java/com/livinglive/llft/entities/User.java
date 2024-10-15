@@ -12,6 +12,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.UUID;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.livinglive.llft.controller.dto.LoginRequest;
+
 import java.util.Set;
 
 @Entity
@@ -66,5 +71,9 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder){
+        return passwordEncoder.matches(loginRequest.password(), this.password);
     }
 }
