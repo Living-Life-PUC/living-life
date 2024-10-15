@@ -30,9 +30,9 @@ public class AdminUserConfig implements CommandLineRunner{
     @Override
     @Transactional
     public void run(String... args) throws Exception{
-        System.out.println("roleAdmin: " + Role.Values.ADMIN.name());
+        System.out.println("roleAdmin: " + Role.Values.ADMIN.name().toLowerCase());
 
-        var roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name());
+        var roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name().toLowerCase());
         var userAdmin = userRepository.findByUsername("admin");
         userAdmin.ifPresentOrElse(
             user -> System.out.println("admin ja existe"), 
