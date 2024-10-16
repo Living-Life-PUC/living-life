@@ -29,7 +29,7 @@ public class TokenController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
         var user = userRepository.findByUsername(loginRequest.username());
-        if (user.isEmpty() || user.get().isLoginCorrect(loginRequest, passwordEncoder)){
+        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)){
             throw new BadCredentialsException("user or password is invalid!");
         }
         var now = Instant.now();
