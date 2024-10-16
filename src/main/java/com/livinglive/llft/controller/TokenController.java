@@ -1,6 +1,7 @@
 package com.livinglive.llft.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.livinglive.llft.controller.dto.LoginRequest;
 import com.livinglive.llft.controller.dto.LoginResponse;
+import com.livinglive.llft.entities.Role;
 import com.livinglive.llft.repository.UserRepository;
 
 @RestController
@@ -36,11 +38,18 @@ public class TokenController {
         }
         var now = Instant.now();
         var expiresIn = 300L;
+        
+        var scopes = user.get().getRoles()
+            .stream()
+            .map(Role::getName)
+            .collect(Collectors.joining());
+
         var claims = JwtClaimsSet.builder()
             .issuer("living-life")
             .subject(user.get().getUserId().toString())
             .issuedAt(now)
             .expiresAt(now.plusSeconds(expiresIn))
+            .claim("scope", scopes)
             .build();
 
             var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
