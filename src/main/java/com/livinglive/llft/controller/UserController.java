@@ -1,5 +1,7 @@
 package com.livinglive.llft.controller;
 
+import java.util.Set;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,8 +46,8 @@ public class UserController {
         var user = new User();
         user.setUsername(dto.username());
         user.setPassword(passwordEncoder.encode(dto.password()));
-        //  user.setRoles(Set.of(basicRole));
-        //userRepository.save(user);
+        user.setRoles(Set.of(basicRole));
+        userRepository.save(user);
         return ResponseEntity.ok().build();
     }
 }
