@@ -15,9 +15,13 @@ services:
     container_name: spring-app
     ports:
       - "8080:8080"
+      - "8000:8000"  # Expose port for debugging
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/living-life
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=pwd
     depends_on:
       - postgres
+    volumes:
+      - .:/app  # Bind your local directory to the container for live reload
+    command: ./mvnw spring-boot:run  # Run the application in dev mode
