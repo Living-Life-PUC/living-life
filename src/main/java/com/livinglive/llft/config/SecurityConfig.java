@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -73,7 +72,6 @@ public class SecurityConfig {
 
                 var oAuthUser = authentication.getPrincipal();
                 if ( oAuthUser instanceof DefaultOidcUser){
-                    System.out.println("Authorities: " + ((DefaultOidcUser)oAuthUser).getAuthorities());
                     CreateUserDto dto = new CreateUserDto(
                         ((DefaultOidcUser)oAuthUser).getFullName(),
                         "",

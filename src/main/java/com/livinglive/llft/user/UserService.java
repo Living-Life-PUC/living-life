@@ -44,6 +44,8 @@ public class UserService {
         user.setUsername(dto.username());
         user.setPassword(passwordEncoder.encode(dto.password()));
         user.setRoles(Set.of(basicRole));
+        user.setEmail(dto.email());
+        user.setPicture(dto.picture());
         userRepository.save(user);
     }
 
@@ -60,6 +62,8 @@ public class UserService {
         user.setUsername(dto.username());
         user.setPassword(passwordEncoder.encode(dto.password()));
         user.setRoles(Set.of(adminRole));
+        user.setEmail(dto.email());
+        user.setPicture(dto.picture());
         userRepository.save(user);
     }
 
