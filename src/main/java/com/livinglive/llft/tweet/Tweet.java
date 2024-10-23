@@ -1,4 +1,4 @@
-package com.livinglive.llft.entities;
+package com.livinglive.llft.tweet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.livinglive.llft.user.User;
 @Entity
 @Table(name = "tb_tweets")
 public class Tweet {

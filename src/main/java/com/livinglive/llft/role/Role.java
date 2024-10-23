@@ -1,4 +1,4 @@
-package com.livinglive.llft.entities;
+package com.livinglive.llft.role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

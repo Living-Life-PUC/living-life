@@ -1,4 +1,4 @@
-package com.livinglive.llft.controller;
+package com.livinglive.llft.tweet;
 
 import java.util.UUID;
 
@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.livinglive.llft.controller.dto.CreateTweetDto;
-import com.livinglive.llft.controller.dto.FeedDto;
-import com.livinglive.llft.controller.dto.FeedItemDto;
-import com.livinglive.llft.entities.Role;
-import com.livinglive.llft.entities.Tweet;
-import com.livinglive.llft.repository.TweetRepository;
-import com.livinglive.llft.repository.UserRepository;
+import com.livinglive.llft.user.UserRepository;
+import com.livinglive.llft.role.Role;
+import com.livinglive.llft.tweet.dto.CreateTweetDto;
+import com.livinglive.llft.tweet.dto.FeedDto;
+import com.livinglive.llft.tweet.dto.FeedItemDto;
 
 @RestController
 public class TweetController {

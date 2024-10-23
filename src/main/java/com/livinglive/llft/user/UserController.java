@@ -1,4 +1,4 @@
-package com.livinglive.llft.controller;
+package com.livinglive.llft.user;
 
 import java.util.List;
 import java.util.Set;
@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.livinglive.llft.controller.dto.CreateUserDto;
-import com.livinglive.llft.entities.Role;
-import com.livinglive.llft.entities.User;
-import com.livinglive.llft.repository.RoleRepository;
-import com.livinglive.llft.repository.UserRepository;
+import com.livinglive.llft.role.Role;
+import com.livinglive.llft.role.RoleRepository;
+import com.livinglive.llft.user.dto.CreateUserDto;
 
 import jakarta.transaction.Transactional;
 

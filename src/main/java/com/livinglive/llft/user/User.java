@@ -1,4 +1,4 @@
-package com.livinglive.llft.entities;
+package com.livinglive.llft.user;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,7 +15,8 @@ import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.livinglive.llft.controller.dto.LoginRequest;
+import com.livinglive.llft.role.Role;
+import com.livinglive.llft.token.dto.LoginRequest;
 
 import java.util.Set;
 

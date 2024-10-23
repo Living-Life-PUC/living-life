@@ -1,4 +1,4 @@
-package com.livinglive.llft.controller;
+package com.livinglive.llft.token;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.livinglive.llft.controller.dto.LoginRequest;
-import com.livinglive.llft.controller.dto.LoginResponse;
-import com.livinglive.llft.entities.Role;
-import com.livinglive.llft.repository.UserRepository;
+import com.livinglive.llft.user.UserRepository;
+import com.livinglive.llft.role.Role;
+import com.livinglive.llft.token.dto.LoginRequest;
+import com.livinglive.llft.token.dto.LoginResponse;
 
 @RestController
 public class TokenController {

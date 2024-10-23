@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.livinglive.llft.entities.Role;
-import com.livinglive.llft.entities.User;
-import com.livinglive.llft.repository.RoleRepository;
-import com.livinglive.llft.repository.UserRepository;
+import com.livinglive.llft.user.*;
+import com.livinglive.llft.role.*;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner{

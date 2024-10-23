@@ -1,4 +1,4 @@
-package com.livinglive.llft.controller.dto;
+package com.livinglive.llft.token.dto;
 
 public record LoginResponse(String accessToken, long expiresIn){ 
 }

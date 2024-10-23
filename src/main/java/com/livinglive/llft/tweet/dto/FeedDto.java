@@ -1,4 +1,4 @@
-package com.livinglive.llft.controller.dto;
+package com.livinglive.llft.tweet.dto;
 
 import java.util.List;
 
