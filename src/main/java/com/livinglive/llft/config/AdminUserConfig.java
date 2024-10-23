@@ -1,44 +1,32 @@
 package com.livinglive.llft.config;
 
-import java.util.Set;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.livinglive.llft.user.*;
-import com.livinglive.llft.role.*;
+import com.livinglive.llft.user.UserService;
+import com.livinglive.llft.user.dto.CreateUserDto;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner{
-    private RoleRepository roleRepository;
+    private final UserService userService;
 
-    private UserRepository userRepository;
-
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public AdminUserConfig(RoleRepository roleRepository, UserRepository userRepository,
-            BCryptPasswordEncoder passwordEncoder) {
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AdminUserConfig(@Lazy UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     @Transactional
     public void run(String... args) throws Exception{
-        var roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name());
 
-        var userAdmin = userRepository.findByUsername("admin");
+        var userAdmin = userService.findByName("admin");
         userAdmin.ifPresentOrElse(
             user -> System.out.println("admin ja existe"), 
             ()-> {
-                var user = new User();
-                user.setUsername("admin");
-                user.setPassword(passwordEncoder.encode("123"));
-                user.setRoles(Set.of(roleAdmin));
-                userRepository.save(user);
+                var dto = new CreateUserDto("admin", "123", "admin@gmail.com", "picture.com");
+
+                userService.newAdmin(dto);
             }
             
         );
