@@ -1,59 +1,24 @@
 package com.livinglive.llft.token;
 
-import java.time.Instant;
-import java.util.stream.Collectors;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.livinglive.llft.user.UserRepository;
-import com.livinglive.llft.role.Role;
 import com.livinglive.llft.token.dto.LoginRequest;
 import com.livinglive.llft.token.dto.LoginResponse;
 
 @RestController
 public class TokenController {
-    private final JwtEncoder jwtEncoder;
-    private final UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
-        this.jwtEncoder = jwtEncoder;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    private final TokenService tokenService;
+    
+    public TokenController(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
-        var user = userRepository.findByUsername(loginRequest.username());
-        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)){
-            throw new BadCredentialsException("user or password is invalid!");
-        }
-        var now = Instant.now();
-        var expiresIn = 300L;
-        
-        var scopes = user.get().getRoles()
-            .stream()
-            .map(Role::getName)
-            .collect(Collectors.joining());
-
-        var claims = JwtClaimsSet.builder()
-            .issuer("living-life")
-            .subject(user.get().getUserId().toString())
-            .issuedAt(now)
-            .expiresAt(now.plusSeconds(expiresIn))
-            .claim("scope", scopes)
-            .build();
-
-            var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
-            return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
-        }
+        LoginResponse loginResponse = tokenService.generateToken(loginRequest);
+        return ResponseEntity.ok(loginResponse);
+    }
 }
