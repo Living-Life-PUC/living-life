@@ -2,7 +2,6 @@ package com.livinglive.llft.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.livinglive.llft.user.UserService;
@@ -12,7 +11,7 @@ import com.livinglive.llft.user.dto.CreateUserDto;
 public class AdminUserConfig implements CommandLineRunner{
     private final UserService userService;
 
-    public AdminUserConfig(@Lazy UserService userService) {
+    public AdminUserConfig(UserService userService) {
         this.userService = userService;
     }
 

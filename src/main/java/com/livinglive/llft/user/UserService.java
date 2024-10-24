@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.livinglive.llft.role.Role;
 import com.livinglive.llft.role.RoleRepository;
+import com.livinglive.llft.token.dto.LoginRequest;
 import com.livinglive.llft.user.dto.CreateUserDto;
 
 import jakarta.transaction.Transactional;
@@ -33,7 +34,6 @@ public class UserService {
 
     @Transactional
     public void newUser(CreateUserDto dto){
-        
         var basicRole = roleRepostory.findByName(Role.Values.BASIC.name());
         var userFromDb = userRepository.findByUsername(dto.username());
         if(userFromDb.isPresent()){
@@ -75,5 +75,9 @@ public class UserService {
     public List<User> listUsers() {
         var users = userRepository.findAll();
         return users;
+    }
+
+    public boolean isLoginCorrect(LoginRequest loginRequest,  String password){
+        return passwordEncoder.matches(loginRequest.password(), password);
     }
 }

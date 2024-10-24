@@ -1,5 +1,6 @@
 package com.livinglive.llft.user;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
@@ -47,4 +48,9 @@ public class OAuthUserService {
         userRepository.save(user);
     }
 
+
+    public Optional<User> findByName(String name) {
+        var user = userRepository.findByUsername(name);
+        return user;
+    }
 }

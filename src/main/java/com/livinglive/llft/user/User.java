@@ -3,10 +3,7 @@ package com.livinglive.llft.user;
 import java.util.Set;
 import java.util.UUID;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.livinglive.llft.role.Role;
-import com.livinglive.llft.token.dto.LoginRequest;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -94,7 +91,4 @@ public class User {
         this.roles = roles;
     }
 
-    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder){
-        return passwordEncoder.matches(loginRequest.password(), this.password);
-    }
 }
