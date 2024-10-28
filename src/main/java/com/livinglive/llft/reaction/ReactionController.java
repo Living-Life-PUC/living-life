@@ -1,5 +1,7 @@
 package com.livinglive.llft.reaction;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +26,7 @@ public class ReactionController {
         @RequestBody CreateReactionDto dto, 
         JwtAuthenticationToken token){
             
-            reactionService.newReaction(tweetId, dto);
+            reactionService.newReaction(tweetId, UUID.fromString(token.getName()), dto);
             return ResponseEntity.ok().build();
     }
 }

@@ -1,5 +1,7 @@
 package com.livinglive.llft.reaction;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,9 +28,9 @@ public class ReactionService {
 
 
     @Transactional
-    public void newReaction(Long tweetId, CreateReactionDto dto){
+    public void newReaction(Long tweetId, UUID userId, CreateReactionDto dto){
         var tweetFromDb = tweetRepository.findById(tweetId);
-        var userFromDb = userRepository.findById(dto.userId());
+        var userFromDb = userRepository.findById(userId);
 
         if(!userFromDb.isPresent() && !tweetFromDb.isPresent()){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
