@@ -2,6 +2,7 @@ package com.livinglive.llft.reaction;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,12 @@ public class ReactionController {
     }
 
     @PostMapping("/tweets/{tweetId}/reactions")
-        public ResponseEntity<Void> createReaction(@RequestBody CreateReactionDto dto, JwtAuthenticationToken token){
-        
-        return ResponseEntity.ok().build();
+        public ResponseEntity<Void> createReaction(
+        @PathVariable Long tweetId,    
+        @RequestBody CreateReactionDto dto, 
+        JwtAuthenticationToken token){
+            
+            reactionService.newReaction(tweetId, dto);
+            return ResponseEntity.ok().build();
     }
 }

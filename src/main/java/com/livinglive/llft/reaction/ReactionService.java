@@ -26,9 +26,9 @@ public class ReactionService {
 
 
     @Transactional
-    public void newReaction(CreateReactionDto dto){
+    public void newReaction(Long tweetId, CreateReactionDto dto){
+        var tweetFromDb = tweetRepository.findById(tweetId);
         var userFromDb = userRepository.findById(dto.userId());
-        var tweetFromDb = tweetRepository.findById(dto.tweetId());
 
         if(!userFromDb.isPresent() && !tweetFromDb.isPresent()){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
