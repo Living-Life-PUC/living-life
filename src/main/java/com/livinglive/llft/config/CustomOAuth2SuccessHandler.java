@@ -52,13 +52,14 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler{
                 oidcUser.getEmail(),
                 oidcUser.getPicture()
             );
-            var user = oAuthUserService.findByName(dto.username());
 
             
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, String> tokenResponse = new HashMap<>();
+            
+            var user = oAuthUserService.findByName(dto.username());
             user.ifPresentOrElse(
                 (u)->{         
                     LoginRequest loginRequest = new LoginRequest(u.getUsername(), u.getPassword());

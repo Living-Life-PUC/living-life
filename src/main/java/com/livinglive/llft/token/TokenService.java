@@ -20,7 +20,7 @@ public class TokenService {
     private final JwtEncoder jwtEncoder;
     private final UserService userService;
     private final OAuthUserService oAuthUserService;
-
+    
     public TokenService(JwtEncoder jwtEncoder, UserService userService, OAuthUserService oAuthUserService) {
         this.jwtEncoder = jwtEncoder;
         this.userService = userService;

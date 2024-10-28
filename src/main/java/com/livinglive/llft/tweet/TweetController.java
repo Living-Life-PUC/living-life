@@ -45,17 +45,6 @@ public class TweetController {
         return ResponseEntity.ok(new FeedDto(tweets.getContent(), page, pageSize, tweets.getTotalPages(), tweets.getTotalElements()));
     }
 
-    @GetMapping("/login/google")
-    public ResponseEntity<FeedDto> loginGoogle(@RequestParam(value = "page", defaultValue = "0") int page,
-                                        @RequestParam(value = "pageSize", defaultValue ="10") int pageSize){
-        var tweets = tweetRepository.findAll(PageRequest.of(page, pageSize, Direction.DESC, "creationTimestamp"))
-        .map(tweet -> 
-            new FeedItemDto(
-                tweet.getTweetId(), 
-                tweet.getContent(), 
-                tweet.getUser().getUsername()));
-        return ResponseEntity.ok(new FeedDto(tweets.getContent(), page, pageSize, tweets.getTotalPages(), tweets.getTotalElements()));
-    }
     @PostMapping("/tweets")
     public ResponseEntity<Void> createTweet(@RequestBody CreateTweetDto dto, JwtAuthenticationToken token){
         var user = userRepository.findById(UUID.fromString(token.getName()));
