@@ -2,7 +2,7 @@ package com.livinglive.llft.user;
 
 import java.util.Optional;
 import java.util.Set;
-
+import java.util.HashSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.livinglive.llft.role.Role;
 import com.livinglive.llft.role.RoleRepository;
 import com.livinglive.llft.user.dto.CreateUserDto;
+import com.livinglive.llft.workout.Workout;
 
 import jakarta.transaction.Transactional;
 
@@ -45,6 +46,8 @@ public class OAuthUserService {
         user.setRoles(Set.of(basicRole));
         user.setEmail(dto.email());
         user.setPicture(dto.picture());
+        user.setWorkouts(new HashSet<Workout>());
+
         userRepository.save(user);
     }
 

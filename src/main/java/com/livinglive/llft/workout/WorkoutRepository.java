@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WorkoutRepository extends JpaRepository<Workout, Long>{
-    Optional <Workout> findByUsername(String name);
+    Optional <Workout> findByName(String name);
 }
