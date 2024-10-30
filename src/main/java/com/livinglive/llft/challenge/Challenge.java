@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.Set;
 
+import com.livinglive.llft.tweet.Tweet;
 import com.livinglive.llft.user.User;
 import com.livinglive.llft.workout.Workout;
 
@@ -42,6 +43,10 @@ public class Challenge {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> participants;
+
+
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Tweet> tweets;
 
     public Long getId() {
         return id;
@@ -105,5 +110,13 @@ public class Challenge {
 
     public void setParticipants(Set<User> participants) {
         this.participants = participants;
+    }
+
+    public Set<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(Set<Tweet> tweets) {
+        this.tweets = tweets;
     }
 }
