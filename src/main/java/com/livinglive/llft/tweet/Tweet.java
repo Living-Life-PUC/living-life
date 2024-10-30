@@ -2,6 +2,7 @@ package com.livinglive.llft.tweet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +13,7 @@ import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.user.User;
 @Entity
 @Table(name = "tb_tweets")
@@ -29,6 +31,10 @@ public class Tweet {
     
     @CreationTimestamp
     private Instant creationTimestamp;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "challenge_id", nullable = true)
+    private Challenge challenge;
 
     public Long getTweetId() {
         return tweetId;
@@ -60,5 +66,13 @@ public class Tweet {
 
     public void setCreationTimestamp(Instant creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public Challenge getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
 }
