@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.role.Role;
 import com.livinglive.llft.role.RoleRepository;
 import com.livinglive.llft.token.dto.LoginRequest;
@@ -49,6 +50,7 @@ public class UserService {
         user.setEmail(dto.email());
         user.setPicture(dto.picture());
         user.setWorkouts(new HashSet<Workout>());
+        user.setChallenges(new HashSet<Challenge>());
         userRepository.save(user);
     }
 
@@ -68,6 +70,7 @@ public class UserService {
         user.setEmail(dto.email());
         user.setPicture(dto.picture());
         user.setWorkouts(new HashSet<Workout>());
+        user.setChallenges(new HashSet<Challenge>());
         userRepository.save(user);
     }
 

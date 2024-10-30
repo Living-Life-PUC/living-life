@@ -3,6 +3,7 @@ package com.livinglive.llft.user;
 import java.util.Set;
 import java.util.UUID;
 
+import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.role.Role;
 import com.livinglive.llft.workout.Workout;
 
@@ -48,6 +49,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Workout> workouts;
     
+
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.LAZY)
+    private Set<Challenge> challenges;
+
     public UUID getUserId() {
         return userId;
     }
@@ -102,6 +107,14 @@ public class User {
 
     public void setWorkouts(Set<Workout> workouts) {
         this.workouts = workouts;
+    }
+
+    public Set<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(Set<Challenge> challenges) {
+        this.challenges = challenges;
     }
 
 }
