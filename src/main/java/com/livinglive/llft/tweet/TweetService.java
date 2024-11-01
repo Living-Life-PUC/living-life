@@ -1,5 +1,6 @@
 package com.livinglive.llft.tweet;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.livinglive.llft.challenge.Challenge;
+import com.livinglive.llft.challenge.ChallengeRepository;
 import com.livinglive.llft.role.Role;
 import com.livinglive.llft.tweet.dto.CreateTweetDto;
 import com.livinglive.llft.tweet.dto.FeedDto;
@@ -22,9 +25,14 @@ public class TweetService {
 
     private final UserRepository userRepository;
 
-    public TweetService(TweetRepository tweetRepository, UserRepository userRepository) {
+    private final ChallengeRepository challengeRepository;
+
+
+    public TweetService(TweetRepository tweetRepository, UserRepository userRepository,
+            ChallengeRepository challengeRepository) {
         this.tweetRepository = tweetRepository;
         this.userRepository = userRepository;
+        this.challengeRepository = challengeRepository;
     }
 
     public FeedDto listFeed(int page, int pageSize){
@@ -43,9 +51,19 @@ public class TweetService {
         var tweet = new Tweet();
         tweet.setUser(user.get());
         tweet.setContent(dto.content());
-        tweet.setChallenge(null);
+
+        if(dto.challengeId() != null){
+            Optional<Challenge> challenge = challengeRepository.findById(dto.challengeId());
+            if(challenge.isPresent()){
+                tweet.setChallenge(challenge.get());
+                challenge.get().getTweets().add(tweet); // updates bidirectional relationship: tweet and challenge 
+            }
+        }else{
+            tweet.setChallenge(null);
+        }
         tweetRepository.save(tweet);
     }
+    
     public  void removeTweet(UUID userId, Long tweetId){
         var user = userRepository.findById(userId);
         var tweet = tweetRepository.findById(tweetId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));

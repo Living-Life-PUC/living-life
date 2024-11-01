@@ -1,5 +1,7 @@
 package com.livinglive.llft.tweet.dto;
 
-public record CreateTweetDto(String content) {
+import jakarta.annotation.Nullable;
+
+public record CreateTweetDto(String content, @Nullable Long challengeId) {
     
 }
