@@ -18,7 +18,7 @@ public class WorkoutController {
         this.workoutService = workoutService;
     }
     
-    @PostMapping("/users/workouts")
+    @PostMapping("/workouts")
     public ResponseEntity<Void> createWorkout(@RequestBody CreateWorkoutDto dto, JwtAuthenticationToken token){
         workoutService.newWorkout(UUID.fromString(token.getName()), dto);
         return ResponseEntity.ok().build();

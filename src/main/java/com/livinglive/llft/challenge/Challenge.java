@@ -2,6 +2,7 @@ package com.livinglive.llft.challenge;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 import com.livinglive.llft.tweet.Tweet;
@@ -46,7 +47,7 @@ public class Challenge {
 
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Tweet> tweets;
+    private List<Tweet> tweets;
 
     public Long getId() {
         return id;
@@ -112,11 +113,11 @@ public class Challenge {
         this.participants = participants;
     }
 
-    public Set<Tweet> getTweets() {
+    public List<Tweet> getTweets() {
         return tweets;
     }
 
-    public void setTweets(Set<Tweet> tweets) {
+    public void setTweets(List<Tweet> tweets) {
         this.tweets = tweets;
     }
 }
