@@ -66,14 +66,3 @@ public class ChallengeService {
         challengeRepository.save(challenge.get());
     }
 }
-
-
-        /* 
-        for (var workoutId : dto.workoutIds()) {
-            var workout = workoutRepository.findById(workoutId);
-            if(workout.get() != null && 
-            user.get().getUserId() == workout.get().getUser().getUserId()){
-                challenge.get().getWorkouts().add(workout.get());
-            }
-        }
-        */
