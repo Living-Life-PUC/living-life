@@ -1,4 +1,6 @@
 package com.livinglive.llft.comments.dto;
 
-public record CreateCommentDto (String content, String url){
+import jakarta.annotation.Nullable;
+
+public record CreateCommentDto (String content, @Nullable String url){
 }
