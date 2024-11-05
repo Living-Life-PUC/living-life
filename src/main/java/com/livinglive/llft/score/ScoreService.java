@@ -18,8 +18,13 @@ public class ScoreService {
 
     @Transactional
     public void newScore(User user, Challenge challenge, CreateScoreDto dto){
+        var scoreInDb = scoreRepository.findByScoreTypeAndScoreDate(dto.scoreType(), dto.scoreDate());
+        if(scoreInDb.isPresent()){
+            return;
+        }
         Score score = new Score();
         score.setScoreType(dto.scoreType());
+        score.setScoreDate(dto.scoreDate());
         score.setUser(user);
         score.setChallenge(challenge);
         scoreRepository.save(score);

@@ -1,5 +1,6 @@
 package com.livinglive.llft.tweet;
 
+import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,6 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.challenge.ChallengeRepository;
 import com.livinglive.llft.role.Role;
+import com.livinglive.llft.score.Score.ScoreType;
+import com.livinglive.llft.score.ScoreService;
+import com.livinglive.llft.score.dto.CreateScoreDto;
 import com.livinglive.llft.tweet.dto.CreateTweetDto;
 import com.livinglive.llft.tweet.dto.FeedDto;
 import com.livinglive.llft.tweet.dto.FeedItemDto;
@@ -27,12 +31,14 @@ public class TweetService {
 
     private final ChallengeRepository challengeRepository;
 
-
+    private final ScoreService scoreService;
+    
     public TweetService(TweetRepository tweetRepository, UserRepository userRepository,
-            ChallengeRepository challengeRepository) {
+            ChallengeRepository challengeRepository, ScoreService scoreService) {
         this.tweetRepository = tweetRepository;
         this.userRepository = userRepository;
         this.challengeRepository = challengeRepository;
+        this.scoreService = scoreService;
     }
 
     public FeedDto listFeed(int page, int pageSize){
@@ -56,7 +62,11 @@ public class TweetService {
             Optional<Challenge> challenge = challengeRepository.findById(dto.challengeId());
             if(challenge.isPresent()){
                 tweet.setChallenge(challenge.get());
-                challenge.get().getTweets().add(tweet); // updates bidirectional relationship: tweet and challenge 
+                challenge.get().getTweets().add(tweet); // updates bidirectional relationship: tweet and challenge
+                CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.TWEET, 
+                tweet.getCreationTimestamp().atZone(ZoneOffset.UTC).toLocalDateTime());
+                scoreService.newScore(tweet.getUser(), tweet.getChallenge(), scoreDto);
+                
             }
         }else{
             tweet.setChallenge(null);
