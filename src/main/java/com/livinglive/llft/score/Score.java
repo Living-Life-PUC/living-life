@@ -1,8 +1,6 @@
 package com.livinglive.llft.score;
 
-import java.time.Instant;
-
-import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.user.User;
@@ -32,8 +30,8 @@ public class Score {
     @Column(name = "score_type", nullable = false)
     private ScoreType scoreType;
 
-    @CreationTimestamp
-    private Instant scoreDate;
+    @Column(name = "score_date", nullable = false)
+    private LocalDateTime scoreDate;
     
     @ManyToOne
     @Column(name = "user_id", nullable = false)
@@ -64,12 +62,12 @@ public class Score {
     }
 
 
-    public Instant getScoreDate() {
+    public LocalDateTime getScoreDate() {
         return scoreDate;
     }
 
 
-    public void setScoreDate(Instant scoreDate) {
+    public void setScoreDate(LocalDateTime scoreDate) {
         this.scoreDate = scoreDate;
     }
 
