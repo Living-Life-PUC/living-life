@@ -1,6 +1,5 @@
 package com.livinglive.llft.tweet;
 
-import java.time.ZoneOffset;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,8 +62,7 @@ public class TweetService {
             if(challenge.isPresent()){
                 tweet.setChallenge(challenge.get());
                 challenge.get().getTweets().add(tweet); // updates bidirectional relationship: tweet and challenge
-                CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.TWEET, 
-                tweet.getCreationTimestamp().atZone(ZoneOffset.UTC).toLocalDateTime());
+                CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.TWEET, tweet.getCreationTimestamp());
                 scoreService.newScore(tweet.getUser(), tweet.getChallenge(), scoreDto);
                 
             }

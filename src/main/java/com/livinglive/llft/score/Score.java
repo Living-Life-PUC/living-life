@@ -92,6 +92,6 @@ public class Score {
     }
 
     public enum ScoreType {
-        COMMENT, SHARE, TWEET
+        COMMENT, REACTION, TWEET
     }
 }

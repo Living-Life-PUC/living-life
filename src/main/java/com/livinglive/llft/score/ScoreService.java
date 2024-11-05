@@ -1,5 +1,8 @@
 package com.livinglive.llft.score;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import org.springframework.stereotype.Service;
 
 import com.livinglive.llft.challenge.Challenge;
@@ -18,13 +21,17 @@ public class ScoreService {
 
     @Transactional
     public void newScore(User user, Challenge challenge, CreateScoreDto dto){
-        var scoreInDb = scoreRepository.findByScoreTypeAndScoreDate(dto.scoreType(), dto.scoreDate());
-        if(scoreInDb.isPresent()){
+        if(challenge == null){
+            return;
+        }
+        LocalDateTime ldt = dto.scoreDate().atZone(ZoneOffset.UTC).toLocalDateTime();
+        var scoreFromDb = scoreRepository.findByScoreTypeAndScoreDate(dto.scoreType(), ldt);
+        if(scoreFromDb.isPresent()){
             return;
         }
         Score score = new Score();
         score.setScoreType(dto.scoreType());
-        score.setScoreDate(dto.scoreDate());
+        score.setScoreDate(ldt);
         score.setUser(user);
         score.setChallenge(challenge);
         scoreRepository.save(score);
