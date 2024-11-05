@@ -15,6 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.user.User;
+import com.livinglive.llft.workout.Workout;
 @Entity
 @Table(name = "tb_tweets")
 public class Tweet {
@@ -35,6 +36,10 @@ public class Tweet {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id", nullable = true)
     private Challenge challenge;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workout_id", nullable = true)
+    private Workout workout;
 
     public Long getTweetId() {
         return tweetId;
@@ -75,4 +80,13 @@ public class Tweet {
     public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
     }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
+
 }
