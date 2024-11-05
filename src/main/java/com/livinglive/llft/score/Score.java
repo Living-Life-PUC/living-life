@@ -1,6 +1,6 @@
 package com.livinglive.llft.score;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.livinglive.llft.challenge.Challenge;
 import com.livinglive.llft.user.User;
@@ -32,7 +32,7 @@ public class Score {
     private ScoreType scoreType;
 
     @Column(name = "score_date", nullable = false)
-    private LocalDateTime scoreDate;
+    private LocalDate scoreDate;
     
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -63,12 +63,12 @@ public class Score {
     }
 
 
-    public LocalDateTime getScoreDate() {
+    public LocalDate getScoreDate() {
         return scoreDate;
     }
 
 
-    public void setScoreDate(LocalDateTime scoreDate) {
+    public void setScoreDate(LocalDate scoreDate) {
         this.scoreDate = scoreDate;
     }
 
