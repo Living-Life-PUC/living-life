@@ -21,7 +21,7 @@ public class ScoreService {
 
     @Transactional
     public void newScore(User user, Challenge challenge, CreateScoreDto dto){
-        if(challenge == null){
+        if(user == null || challenge == null){
             return;
         }
         LocalDateTime ldt = dto.scoreDate().atZone(ZoneOffset.UTC).toLocalDateTime();
