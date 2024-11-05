@@ -12,13 +12,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "tb_scores", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"tweet_id", "score_type"})
+    @UniqueConstraint(columnNames = {"user_id","challenge_id", "score_type"})
 })
 public class Score {
     @Id
@@ -34,11 +35,11 @@ public class Score {
     private LocalDateTime scoreDate;
     
     @ManyToOne
-    @Column(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @Column(name = "challenge_id", nullable = false)
+    @JoinColumn(name = "challenge_id", nullable = false)
     private Challenge challenge;
 
 
