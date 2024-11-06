@@ -1,5 +1,6 @@
 package com.livinglive.llft.comments;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class CommentService {
         comment.setUser(user.get());
         comment.setTweet(tweet.get());
 
-        CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.COMMENT, comment.getCreationTimestamp());
+        CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.COMMENT, Instant.now());
         scoreService.newScore(user.get(), tweet.get().getChallenge(), scoreDto);
         commentRepository.save(comment);
     }

@@ -1,5 +1,6 @@
 package com.livinglive.llft.reaction;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class ReactionService {
         reaction.setTweet(tweetFromDb.get());
         reaction.setReactionType(dto.reactionType());
         
-        CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.REACTION, reaction.getCreationTimestamp());
+        CreateScoreDto scoreDto = new CreateScoreDto(ScoreType.REACTION, Instant.now());
         scoreService.newScore(userFromDb.get(), tweetFromDb.get().getChallenge(), scoreDto);
         reactionRepository.save(reaction);
     }
