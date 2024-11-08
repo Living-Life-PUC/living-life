@@ -1,5 +1,9 @@
 package com.livinglive.llft.comments;
 
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.livinglive.llft.tweet.Tweet;
 import com.livinglive.llft.user.User;
 
@@ -24,6 +28,9 @@ public class Comment {
     private String content;
     
     private String url;
+
+    @CreationTimestamp
+    private Instant creationTimestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -57,6 +64,14 @@ public class Comment {
         this.url = url;
     }
 
+    public Instant getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(Instant creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
     public User getUser() {
         return user;
     }
@@ -72,4 +87,5 @@ public class Comment {
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
     }
+
 }

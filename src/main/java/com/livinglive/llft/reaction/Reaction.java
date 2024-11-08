@@ -13,6 +13,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 import com.livinglive.llft.user.User;
+
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.livinglive.llft.tweet.Tweet;
 
 @Entity
@@ -24,6 +29,13 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "reaction_id")
     private Long reactionId;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reaction_type", nullable = false)
+    private ReactionType reactionType;
+
+    @CreationTimestamp
+    private Instant creationTimestamp;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -33,10 +45,7 @@ public class Reaction {
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "reaction_type", nullable = false)
-    private ReactionType reactionType;
-
+    
     public Long getReactionId() {
         return reactionId;
     }
@@ -45,29 +54,46 @@ public class Reaction {
         this.reactionId = reactionId;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Tweet getTweet() {
-        return tweet;
-    }
-
-    public void setTweet(Tweet tweet) {
-        this.tweet = tweet;
-    }
 
     public ReactionType getReactionType() {
         return reactionType;
     }
 
+
     public void setReactionType(ReactionType reactionType) {
         this.reactionType = reactionType;
     }
+
+
+    public Instant getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+
+    public void setCreationTimestamp(Instant creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public Tweet getTweet() {
+        return tweet;
+    }
+
+
+    public void setTweet(Tweet tweet) {
+        this.tweet = tweet;
+    }
+
 
     public enum ReactionType {
         LIKE, LOVE, HAHA, WOW, SAD, ANGRY
