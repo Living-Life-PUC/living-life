@@ -23,6 +23,7 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<Void> newUser(@RequestBody CreateUserDto dto){
+        System.out.println("dto: " + dto.email());
         userService.newUser(dto);
         return ResponseEntity.ok().build();
     }

@@ -41,6 +41,7 @@ public class UserService {
         }
 
         var user = new User();
+        user.setFullName(dto.fullName());
         user.setUsername(dto.username());
         user.setPassword(passwordEncoder.encode(dto.password()));
         user.setRoles(Set.of(basicRole));

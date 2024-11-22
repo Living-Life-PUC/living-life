@@ -26,6 +26,8 @@ public class User {
     @Column(name = "user_id")
     private UUID userId;
 
+    private String fullName;
+    
     @Column(unique = true)
     private String username;
 
@@ -43,12 +45,22 @@ public class User {
     )
     private Set<Role> roles;
 
+
+
     public UUID getUserId() {
         return userId;
     }
 
     public void setUserId(UUID userId) {
         this.userId = userId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUsername() {
