@@ -23,7 +23,7 @@ public class AdminUserConfig implements CommandLineRunner{
         userAdmin.ifPresentOrElse(
             user -> System.out.println("admin ja existe"), 
             ()-> {
-                var dto = new CreateUserDto("admin", "123", "admin@gmail.com", "picture.com");
+                var dto = new CreateUserDto("Admin", "admin", "123", "admin@gmail.com", "picture.com");
 
                 userService.newAdmin(dto);
             }

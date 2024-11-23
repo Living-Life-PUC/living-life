@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -44,41 +47,24 @@ public class SecurityConfig {
         this.customOAuth2SuccessHandler = customOAuth2SuccessHandler;
     }
 
-    // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-    //     http    
-    //     .authorizeHttpRequests(authorize ->  authorize
-    //         .requestMatchers(HttpMethod.POST, "/users").permitAll()
-    //         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-    //         .requestMatchers("/swagger-ui/**").permitAll()
-    //         .requestMatchers("/login/oauth2/**", "/oauth2/authorization/**").permitAll()
-    //         .anyRequest().authenticated())
-    //     .csrf(csrf -> csrf.disable())
-    //     .oauth2Login( oAuthLogin -> oAuthLogin
-    //         .successHandler( customOAuth2SuccessHandler )
-    //     )
-    //     .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-    //     .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
-        
-    //     return http.build();
-    // }
     @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http    
-        .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.POST, "/users").permitAll()
-            .requestMatchers(HttpMethod.POST, "/login").permitAll()
-            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Grant access to Swagger endpoints
-            .requestMatchers("/login/oauth2/**", "/oauth2/authorization/**").permitAll()
-            .anyRequest().authenticated())
-        .csrf(csrf -> csrf.disable())
-        .oauth2Login(oAuthLogin -> oAuthLogin
-            .successHandler(customOAuth2SuccessHandler))
-        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
-    
-    return http.build();
-}
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http    
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Grant access to Swagger endpoints
+                .requestMatchers("/login/oauth2/**", "/oauth2/authorization/**").permitAll()
+                .anyRequest().authenticated())
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .oauth2Login(oAuthLogin -> oAuthLogin
+                .successHandler(customOAuth2SuccessHandler))
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+        
+        return http.build();
+    }
 
 
     @Bean
@@ -96,5 +82,18 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:5173"); // Allow your frontend's origin
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+        configuration.addAllowedHeader("*"); // Allow all headers
+        configuration.setAllowCredentials(true); // Allow credentials like cookies or Authorization headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Apply CORS configuration to all endpoints
+        return source;
     }
 }

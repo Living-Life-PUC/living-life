@@ -48,6 +48,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler{
             DefaultOidcUser oidcUser = (DefaultOidcUser)oAuthUser;
             CreateUserDto dto = new CreateUserDto(
                 oidcUser.getName(),
+                oidcUser.getNickName(),
                 "",
                 oidcUser.getEmail(),
                 oidcUser.getPicture()
